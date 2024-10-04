@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>16 HLS Video Player Grid</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            text-align: center;
+        }
+        /* Tạo lưới 4x4 */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-gap: 10px;
+            margin: 20px;
+        }
+        .video-container {
+            text-align: center;
+        }
+        video {
+            width: 100%;
+            height: auto;
+        }
+        p {
+            margin-top: 5px;
+            font-size: 14px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>16 HLS Video Player Grid</h1>
+
+    <!-- Grid chứa video -->
+    <div class="video-grid">
+        <div class="video-container">
+            <video id="video1" controls></video>
+            <p>Stream 1</p>
+        </div>
+        <div class="video-container">
+            <video id="video2" controls></video>
+            <p>Stream 2</p>
+        </div>
+        <div class="video-container">
+            <video id="video3" controls></video>
+            <p>Stream 3</p>
+        </div>
+        <div class="video-container">
+            <video id="video4" controls></video>
+            <p>Stream 4</p>
+        </div>
+        <div class="video-container">
+            <video id="video5" controls></video>
+            <p>Stream 5</p>
+        </div>
+        <div class="video-container">
+            <video id="video6" controls></video>
+            <p>Stream 6</p>
+        </div>
+        <div class="video-container">
+            <video id="video7" controls></video>
+            <p>Stream 7</p>
+        </div>
+        <div class="video-container">
+            <video id="video8" controls></video>
+            <p>Stream 8</p>
+        </div>
+        <div class="video-container">
+            <video id="video9" controls></video>
+            <p>Stream 9</p>
+        </div>
+        <div class="video-container">
+            <video id="video10" controls></video>
+            <p>Stream 10</p>
+        </div>
+        <div class="video-container">
+            <video id="video11" controls></video>
+            <p>Stream 11</p>
+        </div>
+        <div class="video-container">
+            <video id="video12" controls></video>
+            <p>Stream 12</p>
+        </div>
+        <div class="video-container">
+            <video id="video13" controls></video>
+            <p>Stream 13</p>
+        </div>
+        <div class="video-container">
+            <video id="video14" controls></video>
+            <p>Stream 14</p>
+        </div>
+        <div class="video-container">
+            <video id="video15" controls></video>
+            <p>Stream 15</p>
+        </div>
+        <div class="video-container">
+            <video id="video16" controls></video>
+            <p>Stream 16</p>
+        </div>
+    </div>
+
+    <!-- HLS.js script -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
+    <script>
+        // URLs of the m3u8 streams
+        var streams = [
+            'https://liveh34.vtvcab.vn/hls/ONSPORT01/index.m3u8',  // Stream 1
+            'https://liveh34.vtvcab.vn/hls/ONSPORT02/index.m3u8',  // Stream 2 (replace with real URLs)
+            'https://liveh34.vtvcab.vn/hls/ONSPORT03/index.m3u8',  // Stream 3
+            'https://liveh34.vtvcab.vn/hls/ONSPORT04/index.m3u8',  // Stream 4
+            'https://liveh34.vtvcab.vn/hls/ONSPORT05/index.m3u8',  // Stream 5
+            'https://liveh34.vtvcab.vn/hls/ONSPORT06/index.m3u8',  // Stream 6
+            'https://liveh34.vtvcab.vn/hls/ONSPORT07/index.m3u8',  // Stream 7
+            'https://liveh34.vtvcab.vn/hls/ONSPORT08/index.m3u8',  // Stream 8
+            'https://liveh34.vtvcab.vn/hls/ONSPORT09/index.m3u8',  // Stream 9
+            'https://liveh34.vtvcab.vn/hls/ONSPORT010/index.m3u8',  // Stream 10
+            'https://liveh34.vtvcab.vn/hls/ONSPORT11/index.m3u8',  // Stream 11
+            'https://liveh34.vtvcab.vn/hls/ONSPORT12/index.m3u8',  // Stream 12
+            'https://liveh34.vtvcab.vn/hls/ONSPORT13/index.m3u8',  // Stream 13
+            'https://liveh34.vtvcab.vn/hls/ONSPORT14/index.m3u8',  // Stream 14
+            'https://liveh34.vtvcab.vn/hls/ONSPORT15/index.m3u8',  // Stream 15
+            'https://liveh34.vtvcab.vn/hls/ONSPORT16/index.m3u8'   // Stream 16
+        ];
+
+        // Loop through each video element and set up the HLS player
+        for (var i = 1; i <= 16; i++) {
+            (function(i) {
+                var video = document.getElementById('video' + i);
+                var videoSrc = streams[i - 1];
+
+                // Check if the browser supports HLS natively
+                if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                    video.src = videoSrc;
+                }
+                // Use HLS.js for browsers that do not support HLS natively
+                else if (Hls.isSupported()) {
+                    var hls = new Hls();
+                    hls.loadSource(videoSrc);
+                    hls.attachMedia(video);
+                    hls.on(Hls.Events.MANIFEST_PARSED, function() {
+                        video.play();
+                    });
+                } else {
+                    console.error("HLS is not supported on this browser.");
+                }
+            })(i);
+        }
+    </script>
+
+</body>
+</html>
